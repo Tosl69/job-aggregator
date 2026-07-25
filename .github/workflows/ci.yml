@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: cd backend && npm install
+
+      - name: Run linter
+        run: cd backend && npx oxlint src/
+
+      - name: Run tests
+        run: cd backend && npm test
+        env:
+          NODE_ENV: test
+          JWT_SECRET: test_secret_for_ci
+          POSTGRES_DB: test
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          DATABASE_URL: postgresql://test:test@localhost:5432/test
