@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+.react-grid-item {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.react-grid-item * {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.react-grid-item a {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.react-resizable-handle {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+  z-index: 20;
+  transition: background 0.2s;
+}
+
+.react-resizable-handle:hover {
+  background: rgba(99, 179, 237, 0.8);
+}
+
+.react-resizable-handle-se { bottom: 3px; right: 3px; width: 14px; height: 14px; cursor: se-resize; border-radius: 3px; }
+.react-resizable-handle-sw { bottom: 3px; left: 3px; width: 14px; height: 14px; cursor: sw-resize; border-radius: 3px; }
+.react-resizable-handle-ne { top: 3px; right: 3px; width: 14px; height: 14px; cursor: ne-resize; border-radius: 3px; }
+.react-resizable-handle-nw { top: 3px; left: 3px; width: 14px; height: 14px; cursor: nw-resize; border-radius: 3px; }
+.react-resizable-handle-n  { top: 3px; left: 50%; transform: translateX(-50%); width: 40px; height: 8px; cursor: n-resize; border-radius: 4px; }
+.react-resizable-handle-s  { bottom: 3px; left: 50%; transform: translateX(-50%); width: 40px; height: 8px; cursor: s-resize; border-radius: 4px; }
+.react-resizable-handle-e  { right: 3px; top: 50%; transform: translateY(-50%); width: 8px; height: 40px; cursor: e-resize; border-radius: 4px; }
+.react-resizable-handle-w  { left: 3px; top: 50%; transform: translateY(-50%); width: 8px; height: 40px; cursor: w-resize; border-radius: 4px; }
