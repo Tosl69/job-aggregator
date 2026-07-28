@@ -7,6 +7,16 @@ const COIN_OPTIONS = [
   { label: 'Solana (SOL)', value: 'solana' },
   { label: 'BNB', value: 'binancecoin' },
   { label: 'XRP', value: 'ripple' },
+  { label: 'Cardano (ADA)', value: 'cardano' },
+  { label: 'Dogecoin (DOGE)', value: 'dogecoin' },
+  { label: 'Polkadot (DOT)', value: 'polkadot' },
+  { label: 'Polygon (MATIC)', value: 'matic-network' },
+  { label: 'Litecoin (LTC)', value: 'litecoin' },
+  { label: 'Chainlink (LINK)', value: 'chainlink' },
+  { label: 'Avalanche (AVAX)', value: 'avalanche-2' },
+  { label: 'Shiba Inu (SHIB)', value: 'shiba-inu' },
+  { label: 'Tron (TRX)', value: 'tron' },
+  { label: 'Toncoin (TON)', value: 'the-open-network' },
 ];
 
 const CURRENCY_OPTIONS = [
@@ -96,7 +106,14 @@ export default function AddWidgetModal({ onClose, onAdd }) {
         </select>
       </div>
     );
-    if (param.name === 'limit') return null;
+    if (param.name === 'limit') return (
+      <div key={param.name}>
+        <label className="text-gray-400 text-sm mb-1 block">Nombre de cryptos</label>
+        <select value={config[param.name] || '5'} onChange={e => setConfig({ ...config, [param.name]: e.target.value })} className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg outline-none">
+          {[5, 10, 15].map(n => <option key={n} value={n}>{n} cryptos</option>)}
+        </select>
+      </div>
+    );
     return null;
   };
 

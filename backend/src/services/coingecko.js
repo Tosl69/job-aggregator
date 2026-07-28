@@ -73,9 +73,10 @@ const getData = async (widgetType, config) => {
   }
 
   if (widgetType === 'top_coins') {
-    const ids = 'bitcoin,ethereum,solana,binancecoin,ripple';
-    return getCached(`top_${currency}`, async () => {
-      const res = await fetch(`${BASE_URL}/coins/markets?vs_currency=${currency}&ids=${ids}&order=market_cap_desc&per_page=5&page=1`);
+    const ids = 'bitcoin,ethereum,solana,binancecoin,ripple,cardano,dogecoin,polkadot,matic-network,litecoin,chainlink,avalanche-2,shiba-inu,tron,the-open-network';
+    const limit = Math.min(parseInt(config.limit) || 5, 15);
+    return getCached(`top_${currency}_${limit}`, async () => {
+      const res = await fetch(`${BASE_URL}/coins/markets?vs_currency=${currency}&ids=${ids}&order=market_cap_desc&per_page=${limit}&page=1`);
       if (!res.ok) throw new Error(`CoinGecko error: ${res.status}`);
       const data = await res.json();
       return data.map(normalizeTopCoin);

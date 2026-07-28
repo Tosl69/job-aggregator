@@ -7,6 +7,16 @@ const COIN_OPTIONS = [
   { label: 'Solana (SOL)', value: 'solana' },
   { label: 'BNB', value: 'binancecoin' },
   { label: 'XRP', value: 'ripple' },
+  { label: 'Cardano (ADA)', value: 'cardano' },
+  { label: 'Dogecoin (DOGE)', value: 'dogecoin' },
+  { label: 'Polkadot (DOT)', value: 'polkadot' },
+  { label: 'Polygon (MATIC)', value: 'matic-network' },
+  { label: 'Litecoin (LTC)', value: 'litecoin' },
+  { label: 'Chainlink (LINK)', value: 'chainlink' },
+  { label: 'Avalanche (AVAX)', value: 'avalanche-2' },
+  { label: 'Shiba Inu (SHIB)', value: 'shiba-inu' },
+  { label: 'Tron (TRX)', value: 'tron' },
+  { label: 'Toncoin (TON)', value: 'the-open-network' },
 ];
 
 const CURRENCY_OPTIONS = [
@@ -71,6 +81,14 @@ export default function EditWidgetModal({ widget, onClose, onSave }) {
               <label className="text-gray-400 text-sm mb-1 block">Période</label>
               <select value={config.days || '7'} onChange={e => setConfig({ ...config, days: e.target.value })} className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg outline-none">
                 {DAYS_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+              </select>
+            </div>
+          )}
+          {fields.includes('limit') && (
+            <div>
+              <label className="text-gray-400 text-sm mb-1 block">Nombre de cryptos</label>
+              <select value={config.limit || '5'} onChange={e => setConfig({ ...config, limit: e.target.value })} className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg outline-none">
+                {[5, 10, 15].map(n => <option key={n} value={n}>{n} cryptos</option>)}
               </select>
             </div>
           )}

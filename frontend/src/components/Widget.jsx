@@ -44,14 +44,23 @@ export default function Widget({ widget, onDelete, onEdit }) {
   const isSmall = size.h < 180 || size.w < 160;
   const isLarge = size.h > 450 && size.w > 450;
 
-  const fetch_ = async () => {
+  const fetch_ = async (isRetry = false) => {
+    const startedAt = Date.now();
+    const MIN_LOADING_MS = 400;
     try {
       const cfg = typeof widget.config === 'string' ? JSON.parse(widget.config) : widget.config;
-      setData(await getServiceData(widget.service_id, widget.widget_type, cfg));
-    } catch (_) {}
-    finally {
+      const result = await getServiceData(widget.service_id, widget.widget_type, cfg);
+      const elapsed = Date.now() - startedAt;
+      if (elapsed < MIN_LOADING_MS) await new Promise(r => setTimeout(r, MIN_LOADING_MS - elapsed));
+      setData(result);
       setLoading(false);
       if (hoverRef.current) setHovered(true);
+    } catch (_) {
+      if (!isRetry) {
+        setTimeout(() => fetch_(true), 3000);
+      } else {
+        setLoading(false);
+      }
     }
   };
 
@@ -131,11 +140,11 @@ export default function Widget({ widget, onDelete, onEdit }) {
       return (
         <div className="flex flex-col h-full gap-1 overflow-hidden">
           {!isSmall && <p className="text-gray-400 uppercase tracking-widest shrink-0" style={{fontSize:sm}}>Classement crypto</p>}
-          <div className="flex flex-col flex-1 min-h-0 justify-evenly">
-            {data.slice(0,5).map((coin,i) => {
+          <div className="flex flex-col flex-1 min-h-0 overflow-y-auto widget-scroll pr-2">
+            {data.slice(0, cfg?.limit || 5).map((coin,i) => {
               const chg = parseFloat(coin.change_24h);
               return (
-                <div key={i} className="flex justify-between items-center border-b border-gray-700 last:border-0 min-h-0 shrink" style={{padding:'2px 0'}}>
+                <div key={i} className="flex justify-between items-center border-b border-gray-700 last:border-0 shrink-0" style={{padding:'6px 0'}}>
                   <div className="flex items-center gap-1.5 min-w-0">
                     <span className="text-gray-500 font-bold shrink-0" style={{fontSize:sm,width:16}}>{i+1}</span>
                     <div className="min-w-0">
